@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
+            openMainFragment()
+        }
+
         networkConnectionLiveData.observe(this) { isInternetAvailable ->
             if (isInternetAvailable) {
                 val popupNetwork = findViewById(R.id.rootPopupNetwork) as? RelativeLayout
@@ -33,5 +37,17 @@ class MainActivity : AppCompatActivity() {
                 viewInflate?.inflate(R.layout.popup_networking, binding.root)
             }
         }
+    }
+
+    fun openMainFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, MainFragment())
+            .commit()
+    }
+
+    fun openSecondFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, SecondFragment())
+            .commit()
     }
 }
