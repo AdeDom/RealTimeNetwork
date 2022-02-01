@@ -1,19 +1,9 @@
 package com.adedom.realtimenetwork
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.RelativeLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.adedom.realtimenetwork.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var networkConnectionLiveData: NetworkConnectionLiveData
+class MainActivity : BaseActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -25,17 +15,6 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             openMainFragment()
-        }
-
-        networkConnectionLiveData.observe(this) { isInternetAvailable ->
-            if (isInternetAvailable) {
-                val popupNetwork = findViewById(R.id.rootPopupNetwork) as? RelativeLayout
-                binding.root.removeView(popupNetwork)
-            } else {
-                val viewInflate =
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-                viewInflate?.inflate(R.layout.popup_networking, binding.root)
-            }
         }
     }
 
